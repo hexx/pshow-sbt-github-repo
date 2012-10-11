@@ -1,0 +1,86 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>sbt-github-repo</title>
+        <link type="text/css" rel="stylesheet" href="assets/css/show.css" />
+        <link type="text/css" rel="stylesheet" href="assets/css/prettify.css" />
+        <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/js/show.js"></script>
+        <script type="text/javascript" src="assets/js/prettify/prettify.js"></script>
+        <script type="text/javascript" src="assets/js/prettify/lang-apollo.js"></script><script type="text/javascript" src="assets/js/prettify/lang-css.js"></script><script type="text/javascript" src="assets/js/prettify/lang-hs.js"></script><script type="text/javascript" src="assets/js/prettify/lang-lisp.js"></script><script type="text/javascript" src="assets/js/prettify/lang-lua.js"></script><script type="text/javascript" src="assets/js/prettify/lang-ml.js"></script><script type="text/javascript" src="assets/js/prettify/lang-proto.js"></script><script type="text/javascript" src="assets/js/prettify/lang-scala.js"></script><script type="text/javascript" src="assets/js/prettify/lang-sql.js"></script><script type="text/javascript" src="assets/js/prettify/lang-sql.js"></script><script type="text/javascript" src="assets/js/prettify/lang-vb.js"></script><script type="text/javascript" src="assets/js/prettify/lang-vhdl.js"></script><script type="text/javascript" src="assets/js/prettify/lang-wiki.js"></script><script type="text/javascript" src="assets/js/prettify/lang-yaml.js"></script><link type="text/css" rel="stylesheet" href="css/custom.css?1349977077410" />
+      <script type="text/javascript"><!--
+        window.onload=function() { prettyPrint(); };
+      --></script>
+      </head>
+      <body>
+        <div id="slides">
+          <div id="reel">
+            <div class="content" id="slide-0">
+       <div class="container"><h1 id="sbt-github-repo">sbt-github-repo</h1><br/>
+<p><a title="@pab_tech" href="https://twitter.com/pab_tech">@pab_tech</a>
+</p></div>
+      </div><div class="content" id="slide-1">
+       <div class="container"><h2 id="%E6%A6%82%E8%A6%81">概要</h2><br/>
+<ul><li>GithubをMavenリポジトリとして使えるようにするsbtプラグイン
+</li><li>https://github.com/hexx/sbt-github-repo
+</li></ul></div>
+      </div><div class="content" id="slide-2">
+       <div class="container"><h2 id="%E3%81%84%E3%81%84%E3%81%A8%E3%81%93%E3%82%8D">いいところ</h2><br/>
+<ul><li>設定が簡単！ 新しいリポジトリを作って<code>build.sbt</code>に二行足すだけ
+</li><li>gh-pagesを使っているので、リポジトリのURLが短くて済む
+</li></ul></div>
+      </div><div class="content" id="slide-3">
+       <div class="container"><h2 id="Publish%E3%81%99%E3%82%8B%E6%89%8B%E9%A0%86">Publishする手順</h2><br/>
+<h3 id="https%3A%2F%2Fgithub.com%2Fhexx%2Frepo+%E3%81%A8%E3%81%84%E3%81%86%E3%83%AC%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%82%92%E4%BD%9C%E3%82%8A%E3%81%9F%E3%81%84">https://github.com/hexx/repo というレポジトリを作りたい</h3><br/>
+<ul><li>Githubで新しいリポジトリを作成する
+</li><li>リポジトリに入れたいライブラリにsbt-github-repoをインストール
+</li><li><code>build.sbt</code>で以下の二つを設定
+</li></ul><br/>
+<pre><code class="prettyprint lang-scala">localRepo := Path.userHome / &quot;github&quot; / &quot;repo&quot;
+
+githubRepo := &quot;git@github.com:hexx/repo.git&quot;
+</code></pre><br/>
+<ul><li><code>sbt publish-to-github-repo</code>で登録完了
+</li></ul></div>
+      </div><div class="content" id="slide-4">
+       <div class="container"><h2 id="%E4%BD%9C%E6%88%90%E3%81%97%E3%81%9F%E3%83%AC%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AB%E5%85%A5%E3%81%A3%E3%81%A6%E3%81%84%E3%82%8B%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%82%92%E4%BD%BF%E3%81%86%E5%A0%B4%E5%90%88">作成したレポジトリに入っているライブラリを使う場合</h2><br/>
+<h3 id="https%3A%2F%2Fgithub.com%2Fhexx%2Frepo+%E3%81%A8%E3%81%84%E3%81%86%E3%83%AC%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%82%92%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84">https://github.com/hexx/repo というレポジトリを使いたい</h3><br/>
+<p>以下の設定を足す
+</p><br/>
+<pre><code class="prettyprint lang-scala">resolvers += &quot;Hexx releases&quot; at &quot;http://hexx.github.com/repo/releases&quot;
+</code></pre></div>
+      </div><div class="content" id="slide-5">
+       <div class="container"><h2 id="%E4%BD%95%E3%82%84%E3%81%A3%E3%81%A6%E3%82%8B%E3%81%AE%EF%BC%9F">何やってるの？</h2><br/>
+<ul><li>Gitの操作してるだけです
+</li><li>sbt-gitを使っています
+</li><li>50行程度のソースで見ればすぐにわかります
+</li></ul><br/>
+<pre><code class="prettyprint lang-scala">def createRepoTask(r: GitRunner, l: File, g: String, s: TaskStreams) {
+  def git(args: String*) = r(args:_*)(l, s.log)
+  git(&quot;init&quot;)
+  l / &quot;index.html&quot; createNewFile()
+  git(&quot;add&quot;, &quot;.&quot;)
+  git(&quot;commit&quot;, &quot;-a&quot;, &quot;-m&quot;, &quot;first commit&quot;)
+  git(&quot;checkout&quot;, &quot;--orphan&quot;, &quot;gh-pages&quot;)
+  git(&quot;rm&quot;, &quot;-rf&quot;, &quot;.&quot;)
+  IO.write(l / &quot;index.html&quot;, &quot;Maven Repository created by sbt-github-repo&quot;)
+  git(&quot;add&quot;, &quot;.&quot;)
+  git(&quot;commit&quot;, &quot;-a&quot;, &quot;-m&quot;, &quot;first commit&quot;)
+  git(&quot;remote&quot;, &quot;add&quot;, &quot;origin&quot;, g)
+  git(&quot;push&quot;, &quot;origin&quot;, &quot;gh-pages&quot;)
+}
+</code></pre></div>
+      </div><div class="content" id="slide-6">
+       <div class="container"><h2 id="%E3%81%A1%E3%82%83%E3%82%93%E3%81%A8Maven+Central%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E3%81%AB%E5%85%A5%E3%82%8C%E3%81%9F%E3%81%84%E3%81%A8%E3%81%84%E3%81%86%E4%BA%BA%E3%81%AB%E3%81%AF%E2%80%A6">ちゃんとMaven Centralリポジトリに入れたいという人には…</h2><br/>
+<p>Sonatype経由で登録する方法があります。
+</p><br/>
+<p><a title="自分が作ったScalaライブラリをMaven Centralリポジトリに登録する方法" href="http://pab-tech.tumblr.com/post/23240310972/scala-maven-central">自分が作ったScalaライブラリをMaven Centralリポジトリに登録する方法</a>
+</p><br/>
+<p>前に僕の書いた解説です。よかったら参考にしてください。
+</p></div>
+      </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="js/custom.js?1349977078139"></script>
+      </body>
+    </html>
